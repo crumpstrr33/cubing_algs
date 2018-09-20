@@ -8,6 +8,8 @@
 % For optional arguments
 \usepackage{xparse}
 \usepackage{xifthen}
+% To indent info
+\usepackage{changepage}
 % Change font color
 \usepackage{xcolor}
 % Define the colors
@@ -55,11 +57,11 @@
 		\ifthenelse{\isempty{#2}}{\info{ }}{\info{#2}}
 
 		\begin{footnotesize}
-			\qquad\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
+			\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
 		\end{footnotesize}
 
 		% One-handed info
-		\ifthenelse{\isempty{#3}}{\info{ }}{\qquad\info{#3}}
+		\ifthenelse{\isempty{#3}}{\info{ }}{\info{#3}}
 	}{
 		% If there is a picture
 		\begin{tabular}{p{1.6cm} p{12cm}}
@@ -73,18 +75,22 @@
 			\ifthenelse{\isempty{#2}}{\info{ }}{\info{#2}}
 
 			\begin{footnotesize}
-				\qquad\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
+				\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
 			\end{footnotesize}
 
 			% One-handed info
-			\ifthenelse{\isempty{#3}}{\info{ }}{\qquad\info{#3}}
+			\ifthenelse{\isempty{#3}}{\info{ }}{\info{#3}}
 		\end{tabular}
 	}
 }
 
 % Extra info if need be
 \newcommand{\info}[1]{
-	\qquad \textcolor{info}{\small{#1}}
+	\vspace{-1.5mm}
+	\begin{adjustwidth}{5mm}{}
+		\textcolor{info}{\small{#1}}
+	\end{adjustwidth}
+	\vspace{1mm}
 }
 
 \begin{document}
@@ -212,4 +218,21 @@ On the top and bottom face when at this step, 2 corners will be solved (with som
 	\nameAndAlg{OLL Parity}{Rw2 B2 Rw' U2 Rw' U2' x' U2 Rw' U2' Rw U2 Rw' U2' Rw2 U2' y}
 	\nameAndAlg{PLL Parity}{r2 U2 r2 Uw2 r2 u2}
 \end{itemizeSquish}
+\newpage
+
+
+
+%%%%%%%%%%%%%%
+%% Megaminx %%
+%%%%%%%%%%%%%%
+\section{Megaminx}
+\subsection{Beginner's Method}
+This method requires no algorithms until the last layer where it closely resembles the 3x3 beginner's method due to it being just simple communtators for the most part.
+\begin{itemizeSquish}
+	\nameAndAlg{Orient Edges}{F R U R' U' F'}
+	\nameAndAlg[][Is the 3x3 Sune equivalent. Counterclockwise rotates BL, BR and FR edge pieces]{Permutate Edge}{R U R' U R U2' R'}
+	\nameAndAlg[][Repeat communtator until corner is solve then AUF to next unsolved corner]{Orient Corners}{R' DR' R DR}
+	\nameAndAlg[][Remove corner with the first algorithm, AUF to its correct slot and insert corner with the second algorithm]{Permutate Corners}{R' DR' R and R' DR R}
+\end{itemizeSquish}
+
 \end{document}
