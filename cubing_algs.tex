@@ -1,0 +1,215 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage[top=.75in, bottom=.75in, left=.75in, right=.75in]{geometry}
+
+% Package for includings pics
+\usepackage{graphicx}
+% Package for adjust pic
+\usepackage{adjustbox}
+% For optional arguments
+\usepackage{xparse}
+\usepackage{xifthen}
+% Change font color
+\usepackage{xcolor}
+% Define the colors
+\definecolor{algName}{rgb}{0.03, 0.55, 0.65}
+\definecolor{algNameOH}{rgb}{0.03, 0.22, 0.30}
+\definecolor{alg}{rgb}{0.74, 0.24, 0.10}
+\definecolor{algOH}{rgb}{0.55, 0.10, 0.04}
+\definecolor{info}{rgb}{1.00, 0.00, 0.00}
+
+
+% Squish close together each bullet point
+\newenvironment{itemizeSquish}
+{\begin{itemize}
+	\setlength{\itemsep}{0pt}
+	\setlength{\parskip}{0pt}}
+{\end{itemize}}
+
+% Name and Alg for some move with optional pic
+\NewDocumentCommand{\nameAndAlg}{ O{} O{} m m }{
+	\item[--]\textbf{\textcolor{algName}{#3}:}
+	\ifthenelse{\isempty{#1}}{
+		\textcolor{alg}{#4}
+	}{
+		\begin{minipage}[t]{\linewidth}
+			\adjustbox{valign=c}{
+				\includegraphics[width=10mm, height=10mm]{#1}
+			}
+			\textcolor{alg}{#4}
+		\end{minipage}
+	}
+	\ifthenelse{\isempty{#2}}{}{
+	
+		\info{#2}
+	}
+}
+
+% Alg name and the regular and OH and algs
+\NewDocumentCommand{\nameAndAlgAndOH}{ O{} O{} O{} m m m }{
+	\item[--]\textbf{\textcolor{algName}{#4}: }
+	\ifthenelse{\isempty{#1}}{
+		% If no picture
+		\textcolor{alg}{#5}
+		
+		% Two-handed info
+		\ifthenelse{\isempty{#2}}{\info{ }}{\info{#2}}
+
+		\begin{footnotesize}
+			\qquad\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
+		\end{footnotesize}
+
+		% One-handed info
+		\ifthenelse{\isempty{#3}}{\info{ }}{\qquad\info{#3}}
+	}{
+		% If there is a picture
+		\begin{tabular}{p{1.6cm} p{12cm}}
+			\vspace{0pt}
+			\includegraphics[width=18mm, height=18mm]{#1}
+			&
+			\vspace{0pt}
+			\textcolor{alg}{#5}
+
+			% Two-handed info
+			\ifthenelse{\isempty{#2}}{\info{ }}{\info{#2}}
+
+			\begin{footnotesize}
+				\qquad\textcolor{algNameOH}{\textbf{OH}}: \textcolor{algOH}{#6}
+			\end{footnotesize}
+
+			% One-handed info
+			\ifthenelse{\isempty{#3}}{\info{ }}{\qquad\info{#3}}
+		\end{tabular}
+	}
+}
+
+% Extra info if need be
+\newcommand{\info}[1]{
+	\qquad \textcolor{info}{\small{#1}}
+}
+
+\begin{document}
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%
+%% PATTERNS %%
+%%%%%%%%%%%%%%
+\section{Patterns}
+\begin{itemizeSquish}
+	\nameAndAlg{Checkerboard}{M2 y M2 z M2}
+	\nameAndAlg{God's Eye}{M (z M)x3}
+	\nameAndAlg{Superflip}{((M U)x4 y x)x3}
+	\nameAndAlg{Cube Within a Cube}{F L F U' R U F2 L2 U' L' B D' B' L2 U}
+	\nameAndAlg{Cube Within a Cube Within a Cube}{U' L' U' F' R2 B' R F U B2 U B' L U' F U R F'}
+\end{itemizeSquish}
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%
+%% ORTEGA (2x2) %%
+%%%%%%%%%%%%%%%%%%
+\section{Ortega (2x2)}
+\subsection{OLL}
+\begin{itemizeSquish}
+	\nameAndAlg[pics/oll/cross_symmetric]{Cross Symmetric}{R2 U2 R U2 R2}	
+	\nameAndAlg[pics/oll/cross_not_symmetric]{Cross Not Symmetric}{F (R U R' U')x2 F'}
+	\nameAndAlg[pics/oll/sune]{Sune}{(R U R' U) R U2 R'}
+	\nameAndAlg[pics/oll/antisune]{Anti-Sune}{(R' U' R U') R' U2 R}
+	\nameAndAlg[pics/oll/headlights]{Headlights}{F (R U R' U') F'}
+	\nameAndAlg[pics/oll/chameleon]{Chameleon}{(R U R' U') (R' F R F')}
+	\nameAndAlg[pics/oll/cross]{Cross}{F (R U') (R' U' R U) (R F)}
+\end{itemizeSquish}
+
+\subsection{PBL}
+\begin{quote}
+On the top and bottom face when at this step, 2 corners will be solved (with some AUF) or all 4 will be. "Edges" is when the 2 that are solved are adjacent to each other. "Corners" is when the 2 that are solved are not next to each other and so are on opposite corners.
+\end{quote}
+\begin{itemizeSquish}
+	\nameAndAlg{Corners Up, Solved Down}{Y-perm (see 3x3 1L PLL)}
+	\nameAndAlg{Edges Up, Solved Down}{T-perm (see 3x3 1L PLL)}
+	\nameAndAlg[][Edges in front]{Edges Up, Edges Down}{R2 U' B2 U2 R2 U' R2}
+	\nameAndAlg{Corners Up, Corners Down}{R2 B2 R2}
+	\nameAndAlg[][Edges on left or right]{Corners Up, Edges Down}{(R2 U' R2 U)x2 R2}
+\end{itemizeSquish}
+\newpage
+
+
+%%%%%%%%%%%%%
+%% CUBOIDS %%
+%%%%%%%%%%%%%
+\section{Cuboids}
+\begin{itemizeSquish}
+	\nameAndAlg[][Swaps the FRU and BRU corners]{Top Layer Corner Swap}{R U (R U')x2 D (R U') (R U R)}
+	\nameAndAlg[][Swaps FU and BU centers]{Opposite Center Swap}{(R U2)x2 R}
+	\nameAndAlg[][Swaps FU and RU centers]{Adjacent Center Swap}{(R U)x2 (R U2)x2 R U R U' R}
+	\nameAndAlg{3x3x4 Parity}{Uu2 R2 F2 u2 F2 R2 F2}
+\end{itemizeSquish}
+\newpage
+
+
+%%%%%%%%%
+%% 3x3 %%
+%%%%%%%%%
+\section{3x3}
+\subsection{3x3 BLD}
+\subsubsection{M2 Edges}
+\begin{itemizeSquish}
+	\nameAndAlg{UB (A)}{M2}
+	\nameAndAlg{BU (Q)}{(B' R B U R2 U') M2 (U R2 U' B' R' B)}
+	\nameAndAlg{UF (C)}{(U2 M')x2}
+	\nameAndAlg{FU (I)}{D (M' [U R2 U'] M [U R2 U']) D' M2}
+	\nameAndAlg{DB (W)}{(M U2)x2}
+	\nameAndAlg{BD (S)}{M2 D ([U R2 U'] M' [U R2 U'] M) D'}
+	\nameAndAlg{Parity Fix}{(D' L2 D) M2 (D' L2 D)}
+\end{itemizeSquish}
+
+\subsection{1L PLL}
+\subsubsection{Permutations Edges Only}
+\begin{itemizeSquish}
+	\nameAndAlgAndOH{Ub}{}{}
+	\nameAndAlgAndOH{Ua}{}{}
+	\nameAndAlgAndOH[pics/pll/z_perm][Solves FL/BR switch with U2 AUF][Solves FR/BL switch with U2 AUF]{Z}{(M2 U')x2 M' U2 M2 U2 M'}{R U R' U R' U' R' U R U' R' U' R2 U R}
+	\nameAndAlgAndOH[pics/pll/h_perm]{H}{M2 U' M2 U2' M2 U' M2}{R2 U2 R U2 R2 U2 R2 U2 R U2 R2}
+\end{itemizeSquish}
+\subsubsection{Permutations Corners Only}
+\begin{itemizeSquish}
+	\nameAndAlgAndOH[pics/pll/aa_perm][Trio of correct pieces in ULB corner][Same alg as TH but with rotations]{Aa}{x R' U R' D2 R U' R' D2 R2}{x R' U R' z' R2 U z U' R' z' R2 U2}
+	\nameAndAlgAndOH[pics/pll/ab_perm][Trio of correct pieces in ULB corner][Same alg as TH but with rotations]{Ab}{x' R U' R D2 R' U R D2 R2}{x' R U' R z' R2 U' z U R z' R2 U2}
+	\nameAndAlgAndOH{E}{}{}
+\end{itemizeSquish}
+\subsubsection{Swap Adjacent Corners}
+\begin{itemizeSquish}
+	\nameAndAlgAndOH{Ra}{}{}
+	\nameAndAlgAndOH{Rb}{}{}
+	\nameAndAlgAndOH{Ja}{}{}
+	\nameAndAlgAndOH{Jb}{}{}
+	\nameAndAlgAndOH[pics/pll/t_perm][T "top" on L side][Same positioning and alg but without rotations as TH]{T}{R U R' U' l' U R2 x' U' R' U' R U R' F'}{R U R' U' R' F R2 U' R' U' R U R' F'}
+	\nameAndAlgAndOH{F}{}{}
+\end{itemizeSquish}
+\subsubsection{Swap Diagonal Corners}
+\begin{itemizeSquish}
+	\nameAndAlgAndOH[pics/pll/v_perm][Trio of correct pieces in ULF corner][Trio of correct pieces in ULF corner]{V}{R' U R' U' y l' U' R2 x U' R' U l' U R U}{R' U2 R U2 z U z' U' R' U z U' R U R' z' R U z U'}
+	\nameAndAlgAndOH{Y}{}{}
+	\nameAndAlgAndOH{Na}{}{}
+	\nameAndAlgAndOH{Nb}{}{}
+\end{itemizeSquish}
+\subsubsection{Double Cycles}
+\begin{itemizeSquish}
+	\nameAndAlgAndOH{Ga}{}{}
+	\nameAndAlgAndOH{Gb}{}{}
+	\nameAndAlgAndOH{Gc}{}{}
+	\nameAndAlgAndOH{Gd}{}{}
+\end{itemizeSquish}
+\newpage
+
+
+%%%%%%%%%
+%% 4x4 %%
+%%%%%%%%%
+\section{4x4}
+\begin{itemizeSquish}
+	\nameAndAlg{OLL Parity}{Rw2 B2 Rw' U2 Rw' U2' x' U2 Rw' U2' Rw U2 Rw' U2' Rw2 U2' y}
+	\nameAndAlg{PLL Parity}{r2 U2 r2 Uw2 r2 u2}
+\end{itemizeSquish}
+\end{document}
